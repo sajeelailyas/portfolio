@@ -1,0 +1,20 @@
+{
+  "name": "portfolio-mern",
+  "version": "1.0.0",
+  "description": "MERN Stack Portfolio Website",
+  "scripts": {
+    "install-all": "npm install && cd backend && npm install && cd ../frontend && npm install",
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "server": "cd backend && npm run dev",
+    "client": "cd frontend && npm run dev",
+    "build": "cd frontend && npm run build",
+    "seed": "cd backend && node scripts/seedProjects.js"
+  },
+  "keywords": ["portfolio", "mern", "react", "node", "mongodb"],
+  "author": "Sajeela Ilyas",
+  "license": "MIT",
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  }
+}
+

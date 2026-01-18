@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Portfolio • Sajeela Ilyas</title>
+  <meta name="description" content="Personal portfolio of Sajeela Ilyas – Software Engineering Student." />
+  <link rel="stylesheet" href="portfolio.css" />
+</head>
+<body>
+  <header class="topbar">
+  <div class="container nav">
+    <!-- Logo + Name -->
+    <a class="brand" href="#home" aria-label="Home">
+      <span class="logo" aria-hidden="true">SI</span>
+      <span>Sajeela Ilyas</span>
+    </a>
+
+    <!-- Navigation Menu -->
+    <nav aria-label="Primary">
+      <ul id="menu">
+        <li><a href="#about">About</a></li>
+        <li><a href="#experience">Experience</a></li>
+        <li><a href="#skills">Skills</a></li>
+        <li><a href="#projects">Projects</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </nav>
+
+    <!-- Actions (Theme toggle + Mobile menu button) -->
+    <div class="actions">
+      <button id="themeToggle" class="chip icon-chip" aria-label="Toggle theme">🌙</button>
+      <button class="menu-btn" aria-expanded="false" aria-controls="menu" id="menuBtn">☰</button>
+    </div>
+  </div>
+</header>
+
+
+  <main id="home" class="container">
+    <section class="hero">
+      <div>
+        <h1>Hi, I’m <span class="gradient-text">Sajeela Ilyas</span></h1>
+        <h2>Software Engineering Student at COMSATS University Islamabad</h2>
+        <p>Motivated and detail-oriented Software Engineering student with growing skills in Flutter, Front-End Web Development, and Java (OOP). Passionate about building user-friendly applications and eager to explore full-stack technologies.</p>
+        <div class="cta">
+          <a class="btn" href="#projects">View Projects</a>
+          <a class="btn" href="#contact">Contact Me</a>
+          <a class="btn" href="documents/CV_SajeelaIlyas.pdf" download>Download CV</a>
+        </div>
+      </div>
+      <div class="hero-portrait" aria-hidden="true">
+        <img src="assets/sajju.jpg"/>
+      </div>
+    </section>
+  </main>
+
+  <!-- About -->
+  <section id="about" class="section">
+    <div class="container section-box">
+      <div class="section-inline">
+        <h2>About</h2>
+        <div class="line">
+          <span class="chip soft"> Sajeela Ilyas • SWE @ COMSATS</span>
+          <span class="chip soft"> Flutter • Java • C++ • Web</span>
+          <span class="chip soft"> Responsive, Interactive Apps</span>
+          <span class="chip soft"> SRS • SDS • Test Plans • Project Proposals</span>
+          <button class="chip icon-chip" data-open="aboutMore">ℹ️ Details</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- EXPERIENCE (new) -->
+  <section id="experience" class="section">
+    <div class="container section-box">
+      <div class="section-inline">
+        <h2>Experience</h2>
+        <div class="line">
+          <!-- concise inline entries -->
+          <span class="chip">Flutter Developer Intern — DevelopersHub Corporation (Jun–Jul 2025)</span>
+          <span class="sep">•</span>
+          <span class="chip">Frontend Development Intern — Code Sentinel (Present)</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Skills -->
+  <section id="skills" class="section">
+    <div class="container section-box">
+      <div class="section-inline">
+        <h2>Skills</h2>
+        <div class="line">
+          <strong class="label">Technical:</strong>
+          <span class="chip">Flutter</span>
+          <span class="chip">Java (OOP)</span>
+          <span class="chip">C++</span>
+          <span class="chip">HTML</span>
+          <span class="chip">CSS</span>
+          <span class="chip">JavaScript</span>
+          <span class="chip">Firebase</span>
+          <span class="sep">|</span>
+          <strong class="label">Tools:</strong>
+          <span class="chip">Git & GitHub</span>
+          <span class="chip">VS Code</span>
+          <span class="chip">Android Studio</span>
+          <span class="chip">MS Office</span>
+          <span class="chip">Google Workspace</span>
+          <span class="sep">|</span>
+          <strong class="label">Soft:</strong>
+          <span class="chip">Communication</span>
+          <span class="chip">Problem Solving</span>
+          <span class="chip">Time Management</span>
+          <span class="chip">Quick Learning</span>
+        </div>
+      </div>
+
+      <div class="filter-row">
+        <input id="chipSearch" type="text" placeholder="Filter skills (e.g., Flutter)" />
+      </div>
+    </div>
+  </section>
+
+  <!-- Projects -->
+  <section id="projects" class="section">
+    <div class="container section-box">
+      <div class="section-inline">
+        <h2>Projects</h2>
+        <div class="line">
+          <button class="chip project" data-project="AutoVisionHub">AutoVisionHub — Flutter • Firebase • AI</button>
+          <button class="chip project" data-project="Budget Tracker">Budget Tracker — Java (OOP)</button>
+          <button class="chip project" data-project="EmotiCam">EmotiCam — Python • OpenCV</button>
+          <button class="chip project" data-project="Eventify">Eventify — HTML • CSS • JS</button>
+          <button class="chip project" data-project="Blood Donation System">Blood Donation System — SQL • MongoDB</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact -->
+  <section id="contact" class="section">
+    <div class="container section-box" style="margin-bottom:12px;">
+      <div class="section-inline">
+        <h2>Contact</h2>
+        <div class="line">
+          <a class="chip link" href="https://mail.google.com/mail/?view=cm&fs=1&to=sajeelailyas@gmail.com" target="_blank">✉️ Email</a>
+          <a class="chip link" href="https://github.com/sajeelailyas" target="_blank" rel="noopener">💻 GitHub</a>
+          <a class="chip link" href="https://www.linkedin.com/in/sajeela-ilyas/" target="_blank" rel="noopener">🔗 LinkedIn</a>
+          <span class="chip soft">📞 +92 348 8920263</span>
+          <span class="chip soft">📍 Islamabad, Pakistan</span>
+          <a class="chip link" href="documents/CV_SajeelaIlyas.pdf" download>📄 Download CV</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="container section-box">
+      <form id="contactForm">
+        <div class="form-row">
+          <div>
+            <label for="name">Name</label>
+            <input id="name" name="name" type="text" required />
+          </div>
+          <div>
+            <label for="email">Email</label>
+            <input id="email" name="email" type="email" required />
+          </div>
+        </div>
+        <div>
+          <label for="message">Message</label>
+          <textarea id="message" name="message" required></textarea>
+        </div>
+        <button type="submit" class="btn">Send</button>
+        <p id="formMsg" role="status"></p>
+      </form>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container">© <span id="year"></span> Sajeela Ilyas. All rights reserved.</div>
+  </footer>
+
+  <!-- Modals -->
+  <dialog id="aboutMore" class="modal">
+    <div class="modal-content">
+      <h3>About – More</h3>
+      <p>I’m a Software Engineering student at COMSATS University Islamabad with hands-on experience in Flutter, Java, C++, and web development. I love building responsive, interactive apps and documenting work with SRS, SDS, and test plans.</p>
+      <button class="btn-outline" data-close>Close</button>
+    </div>
+  </dialog>
+
+  <dialog id="projectModal" class="modal">
+    <div class="modal-content">
+      <h3 id="projectTitle">Project</h3>
+      <p id="projectDesc"></p>
+      <button class="btn-outline" data-close>Close</button>
+    </div>
+  </dialog>
+
+  <script src="portfolio.js"></script>
+</body>
+</html>
