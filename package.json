@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "MERN Stack Portfolio Website",
   "scripts": {
+    "start": "cd backend && npm start",
     "install-all": "npm install && cd backend && npm install && cd ../frontend && npm install",
     "dev": "concurrently \"npm run server\" \"npm run client\"",
     "server": "cd backend && npm run dev",
