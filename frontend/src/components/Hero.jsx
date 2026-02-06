@@ -51,10 +51,11 @@ const Hero = () => {
               </a>
               <a
                 href="/documents/CV_SajeelaIlyas.pdf"
-                download
+                target="_blank"
+                rel="noopener noreferrer"
                 className="btn btn-outline"
               >
-                <FaDownload /> Download CV
+                <FaDownload /> View CV
               </a>
             </motion.div>
           </motion.div>

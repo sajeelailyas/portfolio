@@ -38,11 +38,12 @@ const Experience = () => {
                   {exp.experienceLetter && (
                     <a
                       href={exp.experienceLetter}
-                      download
+                      target="_blank"
+                      rel="noopener noreferrer"
                       className="chip link"
                       style={{ marginLeft: '0.5rem' }}
                     >
-                      <FaFileDownload /> Experience Letter
+                      <FaFileDownload /> View Experience Letter
                     </a>
                   )}
                   {index < experiences.length - 1 && <span className="sep">•</span>}

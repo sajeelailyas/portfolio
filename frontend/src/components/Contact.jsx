@@ -94,10 +94,11 @@ const Contact = () => {
               </span>
               <a
                 href="/documents/CV_SajeelaIlyas.pdf"
-                download
+                target="_blank"
+                rel="noopener noreferrer"
                 className="chip link"
               >
-                <FaFileDownload /> Download CV
+                <FaFileDownload /> View CV
               </a>
             </div>
           </div>

@@ -3,6 +3,63 @@ import { useState, useEffect } from 'react';
 import { FaGithub, FaExternalLinkAlt } from 'react-icons/fa';
 import apiClient from '../config/axios';
 
+// Fallback projects shown when the API fails
+// or returns an empty list (e.g. database not seeded yet)
+const fallbackProjects = [
+  {
+    _id: '1',
+    title: 'AutoVisionHub',
+    description:
+      'An AI-based automotive marketplace and community platform with AR part visualization. Frontend: Flutter, Backend: Node.js. Final Year Project.',
+    technologies: ['Flutter', 'Node.js', 'AI', 'AR'],
+    githubLink: 'https://github.com/HarisAli-dev/AutoVisionHub',
+    featured: true,
+  },
+  {
+    _id: '2',
+    title: 'Blood Donation System (SQL)',
+    description:
+      'A CMD-based blood management system using SQL for managing donors, recipients, inventory, and transfusions with secure admin controls. Semester Project.',
+    technologies: ['Java', 'MySQL', 'JDBC', 'CMD'],
+    githubLink: 'https://github.com/sajeelailyas/blood-management-system',
+    featured: false,
+  },
+  {
+    _id: '3',
+    title: 'Blood Donation System (MongoDB)',
+    description:
+      'A GUI-based blood management system using MongoDB and Java Swing for managing donors, recipients, blood banks, donations, and transfusion records. Semester Project.',
+    technologies: ['Java', 'MongoDB', 'Java Swing', 'NoSQL'],
+    githubLink: 'https://github.com/sajeelailyas/BloodManagmentSys_MongoDB',
+    featured: false,
+  },
+  {
+    _id: '4',
+    title: 'MIDL Internship Project',
+    description:
+      'Web development internship project at Medical and Diagnostic Lab - NCAI. Developed frontend including responsive landing pages and user authentication with Google sign-in.',
+    technologies: ['HTML', 'CSS', 'JavaScript', 'React', 'Google Auth'],
+    githubLink: 'https://github.com/sajeelailyas/midl-internship',
+    featured: false,
+  },
+  {
+    _id: '5',
+    title: 'Budget Tracker App',
+    description: 'A user-friendly GUI budget tracking app using Java OOP. Semester Project.',
+    technologies: ['Java', 'OOP', 'GUI'],
+    githubLink: 'https://github.com/sajeelailyas/budgetTracker',
+    featured: false,
+  },
+  {
+    _id: '6',
+    title: 'Eventify',
+    description: 'An online platform for booking elegant event decoration services. Semester Project.',
+    technologies: ['HTML', 'CSS', 'JavaScript'],
+    githubLink: 'https://github.com/sajeelailyas/eventify',
+    featured: false,
+  },
+];
+
 const Projects = () => {
   const [projects, setProjects] = useState([]);
   const [selectedProject, setSelectedProject] = useState(null);
@@ -15,48 +72,14 @@ const Projects = () => {
   const fetchProjects = async () => {
     try {
       const response = await apiClient.get('/api/projects');
-      setProjects(response.data);
+      const data = Array.isArray(response.data) ? response.data : [];
+
+      // If the API returns an empty array, fall back to local data
+      setProjects(data.length > 0 ? data : fallbackProjects);
     } catch (error) {
       console.error('Error fetching projects:', error);
       // Fallback to default projects if API fails
-      setProjects([
-        {
-          _id: '1',
-          title: 'AutoVisionHub',
-          description: 'An AI-based automotive marketplace and community platform with AR visualization, AI chatbot, and marketplace features.',
-          technologies: ['Flutter', 'Firebase', 'AI'],
-          githubLink: 'https://github.com/sajeelailyas/AutoVisionHub',
-          featured: true
-        },
-        {
-          _id: '2',
-          title: 'Budget Tracker',
-          description: 'A Java OOP desktop app to manage income/expenses and calculate remaining balance.',
-          technologies: ['Java', 'OOP'],
-          githubLink: 'https://github.com/sajeelailyas/BudgetTracker'
-        },
-        {
-          _id: '3',
-          title: 'EmotiCam',
-          description: 'Real-time app that detects facial expressions via webcam and generates emoticons.',
-          technologies: ['Python', 'OpenCV'],
-          githubLink: 'https://github.com/sajeelailyas/EmotiCam'
-        },
-        {
-          _id: '4',
-          title: 'Eventify',
-          description: 'Online platform for booking event decoration services.',
-          technologies: ['HTML', 'CSS', 'JavaScript'],
-          githubLink: 'https://github.com/sajeelailyas/Eventify'
-        },
-        {
-          _id: '5',
-          title: 'Blood Donation System',
-          description: 'Hybrid system using SQL + MongoDB to manage donors, recipients, inventory, and transfusions.',
-          technologies: ['SQL', 'MongoDB'],
-          githubLink: 'https://github.com/sajeelailyas/BloodDonationSystem'
-        }
-      ]);
+      setProjects(fallbackProjects);
     } finally {
       setLoading(false);
     }
