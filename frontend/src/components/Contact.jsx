@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion';
 import { useState, useEffect } from 'react';
-import { FaEnvelope, FaGithub, FaLinkedin, FaPhone, FaMapMarkerAlt, FaFileDownload } from 'react-icons/fa';
+import { FaEnvelope, FaGithub, FaLinkedin, FaPhone, FaMapMarkerAlt, FaExternalLinkAlt } from 'react-icons/fa';
 import apiClient from '../config/axios';
 
 const Contact = () => {
@@ -98,7 +98,7 @@ const Contact = () => {
                 rel="noopener noreferrer"
                 className="chip link"
               >
-                <FaFileDownload /> View CV
+                <FaExternalLinkAlt /> View CV
               </a>
             </div>
           </div>

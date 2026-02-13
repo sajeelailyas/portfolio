@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { FaFileDownload } from 'react-icons/fa';
+import { FaExternalLinkAlt } from 'react-icons/fa';
 
 const Experience = () => {
   const experiences = [
@@ -43,7 +43,7 @@ const Experience = () => {
                       className="chip link"
                       style={{ marginLeft: '0.5rem' }}
                     >
-                      <FaFileDownload /> View Experience Letter
+                      <FaExternalLinkAlt /> View Experience Letter
                     </a>
                   )}
                   {index < experiences.length - 1 && <span className="sep">•</span>}

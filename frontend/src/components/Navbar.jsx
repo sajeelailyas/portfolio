@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { FaMoon, FaSun, FaBars, FaTimes } from 'react-icons/fa';
+import { FaMoon, FaSun, FaBars, FaTimes, FaGithub } from 'react-icons/fa';
 
 const Navbar = ({ theme, toggleTheme }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -54,6 +54,15 @@ const Navbar = ({ theme, toggleTheme }) => {
         </nav>
 
         <div className="nav-actions">
+          <a
+            href="https://github.com/sajeelailyas"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="nav-github"
+            aria-label="GitHub profile"
+          >
+            <FaGithub />
+          </a>
           <button
             onClick={toggleTheme}
             className="theme-toggle"

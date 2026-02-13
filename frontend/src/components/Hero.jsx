@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { FaDownload, FaArrowRight } from 'react-icons/fa';
+import { FaExternalLinkAlt, FaArrowRight } from 'react-icons/fa';
 
 const Hero = () => {
   return (
@@ -55,7 +55,7 @@ const Hero = () => {
                 rel="noopener noreferrer"
                 className="btn btn-outline"
               >
-                <FaDownload /> View CV
+                <FaExternalLinkAlt /> View CV
               </a>
             </motion.div>
           </motion.div>

@@ -9,5 +9,16 @@
       "source": "/((?!documents/|assets/).*)",
       "destination": "/index.html"
     }
+  ],
+  "headers": [
+    {
+      "source": "/documents/(.*)",
+      "headers": [
+        {
+          "key": "Content-Disposition",
+          "value": "inline"
+        }
+      ]
+    }
   ]
 }
