@@ -1,17 +1,21 @@
 import { motion } from 'framer-motion';
 import { FaExternalLinkAlt } from 'react-icons/fa';
+import useMotionPresets from '../hooks/useMotionPresets';
 
 const Experience = () => {
+  const { fadeInUp, staggerContainer, staggerItem, chipHover } = useMotionPresets();
+
   const experiences = [
     {
       title: 'Web Intern - Frontend',
       company: 'Medical Imaging and Diagnostic Lab - NCAI',
-      period: 'September 2025 - November 2025',
+      period: 'Sep 2025 - Nov 2025',
       type: 'internship',
       location: 'On-Site',
       responsibilities: [
-        'Developed the frontend of a web project, including responsive landing pages.',
-        'Developed user authentication features including signup and login with Google.'
+        'Developed responsive and user-friendly frontend interfaces, improving usability and engagement.',
+        'Implemented authentication systems including secure signup and Google login integration.',
+        'Collaborated in a professional development environment following modern workflows.'
       ],
       experienceLetter: '/documents/ExperienceLetter.jpeg'
     }
@@ -22,34 +26,38 @@ const Experience = () => {
       <div className="container">
         <motion.div
           className="section-box"
-          initial={{ opacity: 0, y: 50 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
+          {...fadeInUp}
         >
           <div className="section-header">
             <h2>Experience</h2>
-            <div className="section-content">
+            <motion.div
+              className="section-content"
+              variants={staggerContainer}
+              initial="hidden"
+              whileInView="show"
+              viewport={{ once: true }}
+            >
               {experiences.map((exp, index) => (
-                <div key={index} className="experience-item">
-                  <span className="chip experience-chip">
+                <motion.div key={index} className="experience-item" variants={staggerItem}>
+                  <motion.span className="chip experience-chip" whileHover={chipHover}>
                     {exp.title} — {exp.company} ({exp.period}) — {exp.location}
-                  </span>
+                  </motion.span>
                   {exp.experienceLetter && (
-                    <a
+                    <motion.a
                       href={exp.experienceLetter}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="chip link"
                       style={{ marginLeft: '0.5rem' }}
+                      whileHover={chipHover}
                     >
                       <FaExternalLinkAlt /> View Experience Letter
-                    </a>
+                    </motion.a>
                   )}
                   {index < experiences.length - 1 && <span className="sep">•</span>}
-                </div>
+                </motion.div>
               ))}
-            </div>
+            </motion.div>
           </div>
         </motion.div>
       </div>

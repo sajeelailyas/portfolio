@@ -1,14 +1,14 @@
 :root {
   /* Dark theme (default) */
-  --bg: #0b0f14;
-  --card: #121822;
-  --text: #e6edf3;
-  --muted: #a9b4c0;
-  --accent: #64d2ff;
-  --accent-2: #77f7c1;
-  --shadow: 0 10px 30px rgba(0,0,0,.35);
-  --border: rgba(255,255,255,.12);
-  --chip: rgba(255,255,255,.06);
+  --bg: #070013;
+  --card: rgba(18, 8, 38, 0.78);
+  --text: #f4efff;
+  --muted: rgba(197, 174, 255, 0.9);
+  --accent: #8b5cf6; /* neon purple */
+  --accent-2: #f472b6; /* neon pink */
+  --shadow: 0 18px 60px rgba(0, 0, 0, 0.55);
+  --border: rgba(167, 139, 250, 0.22);
+  --chip: rgba(139, 92, 246, 0.14);
   --gradient: linear-gradient(135deg, var(--accent), var(--accent-2));
 }
 
@@ -17,11 +17,11 @@
   --card: #ffffff;
   --text: #081018;
   --muted: #516173;
-  --accent: #0077ff;
-  --accent-2: #0bbb86;
+  --accent: #7c3aed;
+  --accent-2: #db2777;
   --shadow: 0 10px 20px rgba(18,24,34,.08);
-  --border: rgba(8,16,24,.12);
-  --chip: rgba(8,16,24,.06);
+  --border: rgba(124,58,237,.18);
+  --chip: rgba(124,58,237,.08);
   --gradient: linear-gradient(135deg, var(--accent), var(--accent-2));
 }
 

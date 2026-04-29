@@ -20,12 +20,42 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // MongoDB Connection
-mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/portfolio', {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-})
-.then(() => console.log('MongoDB Connected'))
-.catch(err => console.error('MongoDB Connection Error:', err));
+const mongoUri = process.env.MONGODB_URI || 'mongodb://localhost:27017/portfolio';
+
+const maskMongoUri = (uri) => {
+  // Masks credentials in mongodb://user:pass@host form so we never log passwords.
+  // Example: mongodb+srv://user:pass@cluster/... -> mongodb+srv://user:***@cluster/...
+  return uri.replace(/(mongodb(\+srv)?:\/\/[^:]+:)([^@]+)/i, '$1***');
+};
+
+mongoose
+  .connect(mongoUri)
+  .then(() => console.log('MongoDB Connected'))
+  .catch((err) => {
+    const message = String(err?.message || err);
+
+    // Your current .env has a placeholder like "<db_password>" which will always fail auth.
+    const looksLikePlaceholder = mongoUri.includes('<db_password>');
+    const authFailed =
+      message.toLowerCase().includes('bad auth') ||
+      message.toLowerCase().includes('authentication failed') ||
+      message.toLowerCase().includes('auth failed');
+
+    if (authFailed) {
+      console.error('MongoDB authentication failed.');
+      if (looksLikePlaceholder) {
+        console.error(
+          "Your `backend/.env` `MONGODB_URI` still contains `<db_password>` placeholder. Replace it with the real Atlas password."
+        );
+      } else {
+        console.error(
+          'Double-check Atlas username/password and that the user has access to the target database.'
+        );
+      }
+    }
+
+    console.error('MongoDB Connection Error:', { message, mongoUriMasked: maskMongoUri(mongoUri) });
+  });
 
 // Routes
 app.use('/api/contact', contactRoutes);

@@ -6,30 +6,30 @@ dotenv.config();
 
 const projects = [
   {
-    title: 'AutoVisionHub',
-    description: 'An AI-based automotive marketplace and community platform with AR part visualization. Frontend: Flutter, Backend: Node.js. Final Year Project.',
-    technologies: ['Flutter', 'Node.js', 'AI', 'AR'],
+    title: 'AutoVisionHub - FYP',
+    description: 'AutoVisionHub is an AI-powered automotive marketplace and community platform designed to connect vehicle enthusiasts and simplify buying, selling, and exploring automotive parts. It includes AR-based part visualization for real-world previews, a Flutter frontend for smooth user experience, and a Node.js backend for scalable server-side operations and database management.',
+    technologies: ['Flutter', 'Node.js', 'Express.js', 'MongoDB', 'Firebase'],
     githubLink: 'https://github.com/HarisAli-dev/AutoVisionHub',
     featured: true
   },
   {
-    title: 'Blood Donation System (SQL)',
-    description: 'A CMD-based blood management system using SQL for managing donors, recipients, inventory, and transfusions with secure admin controls. Semester Project.',
-    technologies: ['Java', 'MySQL', 'JDBC', 'CMD'],
+    title: 'Blood Donation System (Semester Project - Database) - SQL',
+    description: 'A blood management system developed to manage donors, blood records, and hospital requirements efficiently. The SQL-based version operates through a command-line interface for structured data management and reliable retrieval in emergency scenarios.',
+    technologies: ['Java', 'SQL', 'MySQL', 'JDBC', 'CMD'],
     githubLink: 'https://github.com/sajeelailyas/blood-management-system',
     featured: false
   },
   {
-    title: 'Blood Donation System (MongoDB)',
-    description: 'A GUI-based blood management system using MongoDB and Java Swing for managing donors, recipients, blood banks, donations, and transfusion records. Semester Project.',
+    title: 'Blood Donation System (Semester Project - Database) - MongoDB',
+    description: 'A GUI-based blood management system implemented with MongoDB, focused on advanced operations such as aggregation pipelines for efficient processing. This NoSQL implementation complements the SQL version and demonstrates handling of both relational and non-relational databases.',
     technologies: ['Java', 'MongoDB', 'Java Swing', 'NoSQL'],
     githubLink: 'https://github.com/sajeelailyas/BloodManagmentSys_MongoDB',
     featured: false
   },
   {
-    title: 'MIDL Internship Project',
-    description: 'Web development internship project at Medical and Diagnostic Lab - NCAI. Developed frontend including responsive landing pages and user authentication with Google sign-in.',
-    technologies: ['HTML', 'CSS', 'JavaScript', 'React', 'Google Auth'],
+    title: 'RX-Scan (Internship Project)',
+    description: 'Designed and developed responsive frontend interfaces for a medical lab management system, including a modern landing page. Implemented Google Sign-In/Sign-Up for user authentication and focused on creating a clean, user-friendly UI to improve accessibility and overall user experience.',
+    technologies: ['HTML', 'CSS', 'JavaScript', 'React'],
     githubLink: 'https://github.com/sajeelailyas/midl-internship',
     featured: false
   },
@@ -41,10 +41,18 @@ const projects = [
     featured: false
   },
   {
-    title: 'Eventify',
-    description: 'An online platform for booking elegant event decoration services. Semester Project.',
+    title: 'Eventify - Event Management System (Semester Project - Web Development)',
+    description: 'A static frontend website for an event management business, featuring pages like Home, About, Contact, Gallery, Testimonials, and Event Types. The project focuses on clean UI design and smooth navigation to showcase services and improve user experience.',
     technologies: ['HTML', 'CSS', 'JavaScript'],
     githubLink: 'https://github.com/sajeelailyas/eventify',
+    featured: false
+  },
+  {
+    title: 'GB Travel Hub - Gilgit-Baltistan Tourism Platform',
+    description:
+      'A region-focused platform for Gilgit-Baltistan that allows users to explore tourist destinations, search locations, and view detailed place information. Implemented dynamic search functionality and structured data handling to improve navigation and user experience.',
+    technologies: ['React', 'Node.js', 'Express.js', 'MongoDB'],
+    githubLink: 'https://github.com/sajeelailyas/GBTravelHub',
     featured: false
   }
 ];
@@ -65,7 +73,17 @@ async function seedProjects() {
 
     process.exit(0);
   } catch (error) {
-    console.error('❌ Error seeding projects:', error);
+    const message = String(error?.message || error);
+    const looksLikePlaceholder = mongoUri?.includes?.('<db_password>');
+
+    if (message.toLowerCase().includes('bad auth') || message.toLowerCase().includes('auth failed')) {
+      console.error('❌ MongoDB authentication failed while seeding.');
+      if (looksLikePlaceholder) {
+        console.error("`backend/.env` `MONGODB_URI` still contains `<db_password>` placeholder. Replace it with the real Atlas password.");
+      }
+    }
+
+    console.error('❌ Error seeding projects:', message);
     process.exit(1);
   }
 }

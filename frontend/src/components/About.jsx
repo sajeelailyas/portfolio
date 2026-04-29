@@ -1,74 +1,51 @@
 import { motion } from 'framer-motion';
-import { useState } from 'react';
+import useMotionPresets from '../hooks/useMotionPresets';
 
 const About = () => {
-  const [isModalOpen, setIsModalOpen] = useState(false);
-
-  const chips = [
-    'Sajeela Ilyas • BSE @ COMSATS',
-    'MERN Stack • Flutter • Java OOP',
-    'Responsive Web Applications',
-    'Testing & QA • SRS • Documentation'
-  ];
+  const { fadeInUp, staggerContainer, staggerItem } = useMotionPresets();
 
   return (
     <section id="about" className="section">
       <div className="container">
         <motion.div
           className="section-box"
-          initial={{ opacity: 0, y: 50 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
+          {...fadeInUp}
         >
           <div className="section-header">
             <h2>About</h2>
-            <div className="section-content">
-              <div className="chips-container">
-                {chips.map((chip, index) => (
-                  <span key={index} className="chip soft">
-                    {chip}
-                  </span>
-                ))}
-              </div>
-              <button
-                className="chip icon-chip"
-                onClick={() => setIsModalOpen(true)}
-              >
-                ℹ️ Details
-              </button>
-            </div>
+            <motion.div
+              className="about-content"
+              variants={staggerContainer}
+              initial="hidden"
+              whileInView="show"
+              viewport={{ once: true }}
+            >
+              <motion.div className="about-bio" variants={staggerItem}>
+                <h3>About Me</h3>
+                <p>
+                  I am a Software Engineering graduate from COMSATS University Islamabad, focused on building responsive and user-friendly web applications.
+                  I enjoy turning ideas into practical products, improving code quality, and continuously growing through real projects.
+                </p>
+              </motion.div>
+
+              <motion.div className="about-highlights" variants={staggerItem}>
+                <div className="about-block">
+                  <h3>Education</h3>
+                  <p>
+                    <strong>COMSATS University Islamabad</strong>, BS Software Engineering (2022 - 2026)
+                  </p>
+                  <p>
+                    <strong>Public School & College Skardu</strong>, Intermediate - Pre-Engineering (2019 - 2021)
+                  </p>
+                  <p>
+                    <strong>Public School & College Skardu</strong>, Matric - Pre-Medical (2017 - 2019)
+                  </p>
+                </div>
+              </motion.div>
+            </motion.div>
           </div>
         </motion.div>
       </div>
-
-      {isModalOpen && (
-        <div className="modal-overlay" onClick={() => setIsModalOpen(false)}>
-          <motion.div
-            className="modal"
-            initial={{ scale: 0.8, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            onClick={(e) => e.stopPropagation()}
-          >
-            <div className="modal-content">
-              <h3>About Me</h3>
-              <p>
-                I am Sajeela Ilyas, a motivated and detail-oriented Software Engineer with a Bachelor's degree in Software Engineering 
-                from COMSATS University Islamabad. I am passionate about web development and skilled in front-end technologies such as 
-                HTML, CSS, JavaScript, and React, while also working with the MERN stack. I enjoy building user-friendly and responsive 
-                web applications and understanding how different parts of a website work together. I am dedicated to improving my skills 
-                through practice and projects and always eager to learn new things in the field of web development.
-              </p>
-              <button
-                className="btn btn-outline"
-                onClick={() => setIsModalOpen(false)}
-              >
-                Close
-              </button>
-            </div>
-          </motion.div>
-        </div>
-      )}
     </section>
   );
 };

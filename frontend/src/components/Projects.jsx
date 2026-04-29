@@ -1,44 +1,45 @@
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { useState, useEffect } from 'react';
 import { FaGithub, FaExternalLinkAlt } from 'react-icons/fa';
 import apiClient from '../config/axios';
+import useMotionPresets from '../hooks/useMotionPresets';
 
 // Fallback projects shown when the API fails
 // or returns an empty list (e.g. database not seeded yet)
 const fallbackProjects = [
   {
     _id: '1',
-    title: 'AutoVisionHub',
+    title: 'AutoVisionHub - FYP',
     description:
-      'An AI-based automotive marketplace and community platform with AR part visualization. Frontend: Flutter, Backend: Node.js. Final Year Project.',
-    technologies: ['Flutter', 'Node.js', 'AI', 'AR'],
-    githubLink: 'https://github.com/HarisAli-dev/AutoVisionHub',
+      'AutoVisionHub is an AI-powered automotive marketplace and community platform designed to connect vehicle enthusiasts and simplify buying, selling, and exploring automotive parts. It includes AR-based part visualization for real-world previews, a Flutter frontend for smooth user experience, and a Node.js backend for scalable server-side operations and database management.',
+    technologies: ['Flutter', 'Node.js', 'Express.js', 'MongoDB', 'Firebase'],
+    githubLink: 'https://github.com/sajeelailyas/AutoVisionHub',
     featured: true,
   },
   {
     _id: '2',
-    title: 'Blood Donation System (SQL)',
+    title: 'Blood Donation System (Semester Project - Database) - SQL',
     description:
-      'A CMD-based blood management system using SQL for managing donors, recipients, inventory, and transfusions with secure admin controls. Semester Project.',
-    technologies: ['Java', 'MySQL', 'JDBC', 'CMD'],
+      'A blood management system developed to manage donors, blood records, and hospital requirements efficiently. The SQL-based version operates through a command-line interface for structured data management and reliable retrieval in emergency scenarios.',
+    technologies: ['Java', 'SQL', 'MySQL', 'JDBC', 'CMD'],
     githubLink: 'https://github.com/sajeelailyas/blood-management-system',
     featured: false,
   },
   {
     _id: '3',
-    title: 'Blood Donation System (MongoDB)',
+    title: 'Blood Donation System (Semester Project - Database) - MongoDB',
     description:
-      'A GUI-based blood management system using MongoDB and Java Swing for managing donors, recipients, blood banks, donations, and transfusion records. Semester Project.',
+      'A GUI-based blood management system implemented with MongoDB, focused on advanced operations such as aggregation pipelines for efficient processing. This NoSQL implementation complements the SQL version and demonstrates handling of both relational and non-relational databases.',
     technologies: ['Java', 'MongoDB', 'Java Swing', 'NoSQL'],
     githubLink: 'https://github.com/sajeelailyas/BloodManagmentSys_MongoDB',
     featured: false,
   },
   {
     _id: '4',
-    title: 'MIDL Internship Project',
+    title: 'RX-Scan (Internship Project)',
     description:
-      'Web development internship project at Medical and Diagnostic Lab - NCAI. Developed frontend including responsive landing pages and user authentication with Google sign-in.',
-    technologies: ['HTML', 'CSS', 'JavaScript', 'React', 'Google Auth'],
+      'Designed and developed responsive frontend interfaces for a medical lab management system, including a modern landing page. Implemented Google Sign-In/Sign-Up for user authentication and focused on creating a clean, user-friendly UI to improve accessibility and overall user experience.',
+    technologies: ['HTML', 'CSS', 'JavaScript', 'React'],
     githubLink: 'https://github.com/sajeelailyas/midl-internship',
     featured: false,
   },
@@ -52,10 +53,19 @@ const fallbackProjects = [
   },
   {
     _id: '6',
-    title: 'Eventify',
-    description: 'An online platform for booking elegant event decoration services. Semester Project.',
+    title: 'Eventify - Event Management System (Semester Project - Web Development)',
+    description: 'A static frontend website for an event management business, featuring pages like Home, About, Contact, Gallery, Testimonials, and Event Types. The project focuses on clean UI design and smooth navigation to showcase services and improve user experience.',
     technologies: ['HTML', 'CSS', 'JavaScript'],
     githubLink: 'https://github.com/sajeelailyas/eventify',
+    featured: false,
+  },
+  {
+    _id: '7',
+    title: 'GB Travel Hub - Gilgit-Baltistan Tourism Platform',
+    description:
+      'A region-focused platform for Gilgit-Baltistan that allows users to explore tourist destinations, search locations, and view detailed place information. Implemented dynamic search functionality and structured data handling to improve navigation and user experience.',
+    technologies: ['React', 'Node.js', 'Express.js', 'MongoDB'],
+    githubLink: 'https://github.com/sajeelailyas/GBTravelHub',
     featured: false,
   },
 ];
@@ -64,6 +74,8 @@ const Projects = () => {
   const [projects, setProjects] = useState([]);
   const [selectedProject, setSelectedProject] = useState(null);
   const [loading, setLoading] = useState(true);
+  const { fadeInUp, staggerContainer, staggerItem, cardHover, chipHover, modalOverlay, modalContent } = useMotionPresets();
+  const [visibleCount, setVisibleCount] = useState(7);
 
   useEffect(() => {
     fetchProjects();
@@ -85,30 +97,38 @@ const Projects = () => {
     }
   };
 
+  const visibleProjects = projects.slice(0, visibleCount);
+  const canLoadMore = visibleCount < projects.length;
+
+  const loadMore = () => {
+    setVisibleCount((prev) => Math.min(prev + 7, projects.length));
+  };
+
   return (
     <section id="projects" className="section">
       <div className="container">
         <motion.div
           className="section-box"
-          initial={{ opacity: 0, y: 50 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
+          {...fadeInUp}
         >
           <div className="section-header">
             <h2>Projects</h2>
             {loading ? (
               <p>Loading projects...</p>
             ) : (
-              <div className="projects-grid">
-                {projects.map((project) => (
+              <motion.div
+                className="projects-grid"
+                variants={staggerContainer}
+                initial="hidden"
+                whileInView="show"
+                viewport={{ once: true, amount: 0.12 }}
+              >
+                {visibleProjects.map((project) => (
                   <motion.div
                     key={project._id}
                     className="project-card"
-                    initial={{ opacity: 0, scale: 0.9 }}
-                    whileInView={{ opacity: 1, scale: 1 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.4 }}
+                    variants={staggerItem}
+                    whileHover={cardHover}
                     onClick={() => setSelectedProject(project)}
                   >
                     <div className="project-header">
@@ -118,50 +138,61 @@ const Projects = () => {
                     <p className="project-description">{project.description}</p>
                     <div className="project-tech">
                       {project.technologies?.map((tech, index) => (
-                        <span key={index} className="tech-tag">{tech}</span>
+                        <motion.span key={index} className="tech-tag" whileHover={chipHover}>{tech}</motion.span>
                       ))}
                     </div>
                     <div className="project-links">
                       {project.githubLink && (
-                        <a
+                        <motion.a
                           href={project.githubLink}
                           target="_blank"
                           rel="noopener noreferrer"
                           className="project-link"
                           onClick={(e) => e.stopPropagation()}
+                          whileHover={{ x: 5 }}
                         >
                           <FaGithub /> GitHub
-                        </a>
+                        </motion.a>
                       )}
                       {project.liveLink && (
-                        <a
+                        <motion.a
                           href={project.liveLink}
                           target="_blank"
                           rel="noopener noreferrer"
                           className="project-link"
                           onClick={(e) => e.stopPropagation()}
+                          whileHover={{ x: 5 }}
                         >
                           <FaExternalLinkAlt /> Live Demo
-                        </a>
+                        </motion.a>
                       )}
                     </div>
                   </motion.div>
                 ))}
-              </div>
+              </motion.div>
+            )}
+
+            {!loading && canLoadMore && (
+              <motion.div className="load-more-row" variants={staggerItem}>
+                <button type="button" className="btn btn-secondary" onClick={loadMore}>
+                  Load More Projects
+                </button>
+              </motion.div>
             )}
           </div>
         </motion.div>
       </div>
 
+      <AnimatePresence>
       {selectedProject && (
-        <div
+        <motion.div
           className="modal-overlay"
           onClick={() => setSelectedProject(null)}
+          {...modalOverlay}
         >
           <motion.div
             className="modal"
-            initial={{ scale: 0.8, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
+            {...modalContent}
             onClick={(e) => e.stopPropagation()}
           >
             <div className="modal-content">
@@ -169,7 +200,7 @@ const Projects = () => {
               <p>{selectedProject.description}</p>
               <div className="project-tech">
                 {selectedProject.technologies?.map((tech, index) => (
-                  <span key={index} className="tech-tag">{tech}</span>
+                  <motion.span key={index} className="tech-tag" whileHover={chipHover}>{tech}</motion.span>
                 ))}
               </div>
               <div className="modal-actions">
@@ -202,8 +233,9 @@ const Projects = () => {
               </div>
             </div>
           </motion.div>
-        </div>
+        </motion.div>
       )}
+      </AnimatePresence>
     </section>
   );
 };

@@ -1,112 +1,106 @@
 import { motion } from 'framer-motion';
 import { useState } from 'react';
+import useMotionPresets from '../hooks/useMotionPresets';
 
 const Skills = () => {
-  const [searchQuery, setSearchQuery] = useState('');
+  const [activeTab, setActiveTab] = useState('Programming & Development');
+  const [visibleCount, setVisibleCount] = useState(10);
+  const { fadeInUp, staggerContainer, staggerItem, chipHover } = useMotionPresets();
 
-  const technicalSkills = [
-    'HTML', 'CSS', 'JavaScript', 'React', 'Node.js', 'Express.js', 
-    'MongoDB (Cloud-Atlas)', 'Flutter', 'Dart', 'Firebase', 'Java (OOP)'
+  const programmingSkills = ['HTML', 'CSS', 'JavaScript', 'React', 'Node.js', 'Express.js', 'MongoDB', 'Flutter', 'Dart', 'Firebase', 'Java (OOP)'];
+  const toolsSkills = ['VS Code', 'Android Studio', 'Git/GitHub', 'Postman', 'JIRA', 'Selenium', 'Cypress'];
+  const testingSkills = ['Manual Testing', 'Automated Testing', 'Test Case Design', 'Regression Testing', 'Bug Reporting'];
+  const documentationSkills = ['Software & Technical Documentation', 'Test Plans', 'Test Cases'];
+  const softSkills = ['Communication', 'Problem Solving', 'Analytical Thinking', 'Time Management', 'Adaptability', 'Leadership'];
+  const otherSkills = ['Prompt Engineering', 'AI Integration', 'Basic Machine Learning Concepts', 'Data Analysis'];
+
+  const skillTabs = [
+    { id: 'Programming & Development', label: 'Programming & Development' },
+    { id: 'Tools & Technologies', label: 'Tools & Technologies' },
+    { id: 'Testing & QA', label: 'Testing & QA' },
+    { id: 'Documentation', label: 'Documentation' },
+    { id: 'Soft Skills', label: 'Soft Skills' },
+    { id: 'Other Skills', label: 'Other Skills' },
   ];
 
-  const tools = [
-    'Visual Studio Code', 'Android Studio', 'Git/GitHub', 'MS Office Suite', 
-    'Google Workspace', 'Selenium WebDriver', 'Cypress', 'JIRA'
-  ];
+  const tabSkills =
+    activeTab === 'Programming & Development'
+      ? programmingSkills
+      : activeTab === 'Tools & Technologies'
+        ? toolsSkills
+        : activeTab === 'Testing & QA'
+          ? testingSkills
+          : activeTab === 'Documentation'
+            ? documentationSkills
+            : activeTab === 'Soft Skills'
+              ? softSkills
+              : otherSkills;
 
-  const testingQA = [
-    'Automated Testing', 'Manual Testing', 'Test Case Design & Execution'
-  ];
+  const visibleSkills = tabSkills.slice(0, visibleCount);
+  const canLoadMore = visibleCount < tabSkills.length;
 
-  const documentation = [
-    'Software Requirements Specification (SRS)', 'Test Plans', 'Test Cases', 'Project Proposals'
-  ];
+  const loadMore = () => {
+    setVisibleCount((prev) => Math.min(prev + 8, tabSkills.length));
+  };
 
-  const softSkills = [
-    'Communication', 'Time Management', 'Problem Solving', 'Quick Learning'
-  ];
-
-  const allSkills = [
-    ...technicalSkills.map(s => ({ name: s, category: 'Technical' })),
-    ...tools.map(s => ({ name: s, category: 'Tools' })),
-    ...testingQA.map(s => ({ name: s, category: 'Testing & QA' })),
-    ...documentation.map(s => ({ name: s, category: 'Documentation' })),
-    ...softSkills.map(s => ({ name: s, category: 'Soft' }))
-  ];
-
-  const filteredSkills = allSkills.filter(skill =>
-    skill.name.toLowerCase().includes(searchQuery.toLowerCase())
-  );
+  const onChangeTab = (nextTab) => {
+    setActiveTab(nextTab);
+    setVisibleCount(10);
+  };
 
   return (
     <section id="skills" className="section">
       <div className="container">
         <motion.div
           className="section-box"
-          initial={{ opacity: 0, y: 50 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
+          {...fadeInUp}
         >
           <div className="section-header">
             <h2>Skills</h2>
-            <div className="section-content">
-              <div className="skills-group">
-                <strong className="label">Technical:</strong>
-                {technicalSkills.map((skill, index) => (
-                  <span key={index} className="chip">{skill}</span>
+            <motion.div
+              className="section-content skills-section-content"
+              variants={staggerContainer}
+              initial="hidden"
+              whileInView="show"
+              viewport={{ once: true }}
+            >
+              <div className="skills-tabs" role="tablist" aria-label="Skills categories">
+                {skillTabs.map((tab) => (
+                  <button
+                    key={tab.id}
+                    type="button"
+                    className={`tab-button ${activeTab === tab.id ? 'active' : ''}`}
+                    onClick={() => onChangeTab(tab.id)}
+                  >
+                    {tab.label}
+                  </button>
                 ))}
               </div>
-              <div className="skills-group">
-                <strong className="label">Tools:</strong>
-                {tools.map((tool, index) => (
-                  <span key={index} className="chip">{tool}</span>
-                ))}
-              </div>
-              <div className="skills-group">
-                <strong className="label">Testing & QA:</strong>
-                {testingQA.map((skill, index) => (
-                  <span key={index} className="chip">{skill}</span>
-                ))}
-              </div>
-              <div className="skills-group">
-                <strong className="label">Documentation:</strong>
-                {documentation.map((skill, index) => (
-                  <span key={index} className="chip">{skill}</span>
-                ))}
-              </div>
-              <div className="skills-group">
-                <strong className="label">Soft:</strong>
-                {softSkills.map((skill, index) => (
-                  <span key={index} className="chip">{skill}</span>
-                ))}
-              </div>
-            </div>
-          </div>
 
-          <div className="filter-row">
-            <input
-              type="text"
-              placeholder="Filter skills (e.g., Flutter)"
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              className="filter-input"
-            />
-          </div>
+              <div className="chips-container">
+                {visibleSkills.map((skill) => (
+                  <motion.span
+                    key={skill}
+                    className="chip"
+                    variants={staggerItem}
+                    initial={{ opacity: 0, y: 12 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    whileHover={chipHover}
+                  >
+                    {skill}
+                  </motion.span>
+                ))}
+              </div>
 
-          {searchQuery && (
-            <div className="filtered-results">
-              {filteredSkills.length > 0 ? (
-                filteredSkills.map((skill, index) => (
-                  <span key={index} className="chip">
-                    {skill.name} <span className="chip-category">({skill.category})</span>
-                  </span>
-                ))
-              ) : (
-                <p className="no-results">No skills found matching "{searchQuery}"</p>
+              {canLoadMore && (
+                <motion.div className="load-more-row" variants={staggerItem}>
+                  <button type="button" className="btn btn-secondary" onClick={loadMore}>
+                    Load More Skills
+                  </button>
+                </motion.div>
               )}
-            </div>
-          )}
+            </motion.div>
+          </div>
         </motion.div>
       </div>
     </section>

@@ -2,6 +2,7 @@ import { motion } from 'framer-motion';
 import { useState, useEffect } from 'react';
 import { FaEnvelope, FaGithub, FaLinkedin, FaPhone, FaMapMarkerAlt, FaExternalLinkAlt } from 'react-icons/fa';
 import apiClient from '../config/axios';
+import useMotionPresets from '../hooks/useMotionPresets';
 
 const Contact = () => {
   const [formData, setFormData] = useState({
@@ -11,6 +12,7 @@ const Contact = () => {
   });
   const [status, setStatus] = useState({ type: '', message: '' });
   const [loading, setLoading] = useState(false);
+  const { fadeInUp, staggerContainer, staggerItem, chipHover } = useMotionPresets();
 
   // Auto-hide success message after 5 seconds
   useEffect(() => {
@@ -54,63 +56,64 @@ const Contact = () => {
       <div className="container">
         <motion.div
           className="section-box"
-          initial={{ opacity: 0, y: 50 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
+          {...fadeInUp}
         >
           <div className="section-header">
             <h2>Contact</h2>
-            <div className="contact-links">
-              <a
+            <motion.div
+              className="contact-links"
+              variants={staggerContainer}
+              initial="hidden"
+              whileInView="show"
+              viewport={{ once: true }}
+            >
+              <motion.a
                 href="https://mail.google.com/mail/?view=cm&fs=1&to=sajeelailyas@gmail.com"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="chip link"
+                variants={staggerItem}
+                whileHover={chipHover}
               >
                 <FaEnvelope /> Email
-              </a>
-              <a
+              </motion.a>
+              <motion.a
                 href="https://github.com/sajeelailyas"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="chip link"
+                variants={staggerItem}
+                whileHover={chipHover}
               >
                 <FaGithub /> GitHub
-              </a>
-              <a
+              </motion.a>
+              <motion.a
                 href="https://www.linkedin.com/in/sajeelailyas/"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="chip link"
+                variants={staggerItem}
+                whileHover={chipHover}
               >
                 <FaLinkedin /> LinkedIn
-              </a>
-              <span className="chip soft">
+              </motion.a>
+              <motion.span className="chip soft" variants={staggerItem} whileHover={chipHover}>
                 <FaPhone /> +92 348 8920263
-              </span>
-              <span className="chip soft">
+              </motion.span>
+              <motion.span className="chip soft" variants={staggerItem} whileHover={chipHover}>
                 <FaMapMarkerAlt /> Islamabad, Pakistan
-              </span>
-              <a
-                href="/documents/CV_SajeelaIlyas.pdf"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="chip link"
-              >
-                <FaExternalLinkAlt /> View CV
-              </a>
-            </div>
+              </motion.span>
+            </motion.div>
           </div>
         </motion.div>
 
         <motion.div
           className="section-box"
           style={{ marginTop: '2rem' }}
-          initial={{ opacity: 0, y: 50 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.2 }}
+          initial={fadeInUp.initial}
+          whileInView={fadeInUp.whileInView}
+          viewport={fadeInUp.viewport}
+          transition={{ ...fadeInUp.transition, delay: 0.15 }}
         >
           <form className="contact-form" onSubmit={handleSubmit}>
             <div className="form-row">

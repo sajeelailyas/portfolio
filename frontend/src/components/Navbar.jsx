@@ -1,10 +1,16 @@
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { FaMoon, FaSun, FaBars, FaTimes, FaGithub } from 'react-icons/fa';
+import useMotionPresets from '../hooks/useMotionPresets';
+import useActiveSection from './Navbar/useActiveSection';
 
 const Navbar = ({ theme, toggleTheme }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const { staggerContainer, staggerItem, chipHover } = useMotionPresets();
+  const activeId = useActiveSection(['home', 'about', 'experience', 'skills', 'projects', 'certificates', 'contact'], {
+    fallbackId: 'home',
+  });
 
   useEffect(() => {
     const handleScroll = () => {
@@ -19,6 +25,7 @@ const Navbar = ({ theme, toggleTheme }) => {
     { href: '#experience', label: 'Experience' },
     { href: '#skills', label: 'Skills' },
     { href: '#projects', label: 'Projects' },
+    { href: '#certificates', label: 'Certificates' },
     { href: '#contact', label: 'Contact' }
   ];
 
@@ -38,45 +45,50 @@ const Navbar = ({ theme, toggleTheme }) => {
         </a>
 
         <nav className={`nav-menu ${isOpen ? 'open' : ''}`}>
-          <ul>
+          <motion.ul variants={staggerContainer} initial="hidden" animate="show">
             {navItems.map((item) => (
-              <li key={item.href}>
-                <a
+              <motion.li key={item.href} variants={staggerItem}>
+                <motion.a
                   href={item.href}
                   onClick={() => setIsOpen(false)}
-                  className="nav-link"
+                  className={`nav-link ${activeId === item.href.replace('#', '') ? 'active' : ''}`}
+                  whileHover={chipHover}
                 >
                   {item.label}
-                </a>
-              </li>
+                </motion.a>
+              </motion.li>
             ))}
-          </ul>
+          </motion.ul>
         </nav>
 
         <div className="nav-actions">
-          <a
+          <motion.a
             href="https://github.com/sajeelailyas"
             target="_blank"
             rel="noopener noreferrer"
             className="nav-github"
             aria-label="GitHub profile"
+            whileHover={{ y: -2, scale: 1.07 }}
           >
             <FaGithub />
-          </a>
-          <button
+          </motion.a>
+          <motion.button
             onClick={toggleTheme}
             className="theme-toggle"
             aria-label="Toggle theme"
+            whileHover={{ rotate: 15, scale: 1.06 }}
+            whileTap={{ scale: 0.96 }}
           >
             {theme === 'dark' ? <FaMoon /> : <FaSun />}
-          </button>
-          <button
+          </motion.button>
+          <motion.button
             className="menu-toggle"
             onClick={() => setIsOpen(!isOpen)}
             aria-label="Toggle menu"
+            whileTap={{ scale: 0.94 }}
           >
             {isOpen ? <FaTimes /> : <FaBars />}
-          </button>
+          </motion.button>
         </div>
       </div>
     </motion.header>

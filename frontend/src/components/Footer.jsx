@@ -1,8 +1,12 @@
+import { motion } from 'framer-motion';
 import { FaGithub } from 'react-icons/fa';
+import useMotionPresets from '../hooks/useMotionPresets';
 
 const Footer = () => {
+  const { fadeInUp } = useMotionPresets();
+
   return (
-    <footer className="footer">
+    <motion.footer className="footer" {...fadeInUp}>
       <div className="container">
         <p>
           © All rights reserved.
@@ -17,7 +21,7 @@ const Footer = () => {
           </a>
         </p>
       </div>
-    </footer>
+    </motion.footer>
   );
 };
 
